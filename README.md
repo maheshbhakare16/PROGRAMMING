@@ -17,7 +17,9 @@
         |- DYNAMIC MEMORY ALLOCATION
         |- STRUCTURE
         |- UNION
-        
+       
+       
+       
 #    |- DATA STRUCTURE
         |- SINGLY LINKED LIST
         |- DOUBLY LINKED LIST
@@ -36,8 +38,41 @@
         |- QUEUE
             |- LINEAR QUEUE (STATICALLY AND DYNAMICALLY BOTH)
             |- CIRCULAR QUEUE (STATICALLY)
+        |- TREE
+            |- BINARY SEARCH TREE
+        
 
 #   |- C++
         |- HISTORY OF C++
         |- BASIC PROGRAM OF C++
-        }- 
+        |- DATA TYPES IN C++
+        |- OBJECT ORIENTED PROGRAMMING
+            |- CLASSES
+            |- OBJECT
+            |- ACCESS SPECIFIERS
+            |- DATA HIDING
+            |- THIS KEYWORD
+            |- CONST KEYWORD
+            |- STATIC KEYWORD
+            |- CONSTRUCTOR
+            |- OPERATOR OVERLOADING
+            |- FUNCTION OVERLOADING
+            |- CONST CAST
+            |- REINTERPRET CAST
+            |- STATIC CAST
+            |- ENCAPSULATION
+            |- INHERITANCE
+            |- FUNCTION OVERRIDING(VIRTUAL)
+        |- 
+        |-
+        |-
+        |-
+
+        
+        
+#   |- JAVA
+        |-
+        |-
+        |-
+        |-
+        |-
