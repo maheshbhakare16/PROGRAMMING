@@ -27,61 +27,23 @@ class Execte
 
             Statement st =null;
             st = con.createStatement();
-// 			-------------------------- INSERT -------------------------------------
-			if(st == null)
-			{
-                System.out.println("Null Pointer st");
-			}
-			
-            System.out.print("Enter roll no of student: ");
-			int roll = sc.nextInt();
-			System.out.print("Enter name of student: ");
-			String name = sc.next();
-			System.out.print("Enter age of student: ");
-			int age = sc.nextInt();
-			System.out.print("Enter marks of student: ");
-			float marks = sc.nextFloat();
-            String query1 =  "insert into student.studinfo values ("+roll+",'"+name+"',"+age+","+marks+")";
- 			boolean result = st.execute(query1);
+            String query = sc.nextLine();
+ 			boolean result = st.execute(query);
  			if (result == true)
  			{
                 ResultSet rs = st.getResultSet();
-                if(rs.next() != false)
+                while(rs.next() != false)
                 {
-                    System.out.println(rs.getInt(1)+" | "+rs.getString(2));
-                }
-                else
-                {
-                    System.out.println("No data Feached....");
+                    System.out.println(" | "+rs.getInt(1)+" | "+rs.getString(2)+" | ");
                 }
  			}
  			else
  			{
-                System.out.println("DDL or DML Query Executed....");
+                int count;
+                count = st.getUpdateCount();
+                System.out.println(count+" rows affected....");
  			}
  			
-//  			------------------------- SEARCH THE RECORD --------------------------
- 			
- 			System.out.print("Enter name of student to search: ");
-			String s1 = sc.next();
-			String query = "select * from student.studinfo where name = '"+s1+"'";
-			result = st.execute(query);
- 			if (result == true)
- 			{
-                ResultSet rs = st.getResultSet();
-                if(rs.next() != false)
-                {
-                    System.out.println(rs.getInt(1)+" | "+rs.getString(2));
-                }
-                else
-                {
-                    System.out.println("No data Feached....");
-                }
- 			}
- 			else
- 			{
-                System.out.println("DDL or DML Query Executed....");
- 			}
         }	
 	}
 }
