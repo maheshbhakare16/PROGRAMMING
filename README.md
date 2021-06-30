@@ -63,9 +63,11 @@
             |- ENCAPSULATION
             |- INHERITANCE
             |- FUNCTION OVERRIDING(VIRTUAL)
-        |- 
-        |-
-        |-
+            |- PURE VIRTUAL FUNCTION
+            
+        |- TEMPLATES
+        |- EXCEPTION HANDLING
+        |- STANDARD TEMPLATE LIBRARY(STL)
         |-
 
         
