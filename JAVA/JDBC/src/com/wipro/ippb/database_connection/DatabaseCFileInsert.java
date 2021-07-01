@@ -8,7 +8,9 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.File;
 import java.util.Scanner;
-
+import java.io.FileOutputStream;
+import org.apache.commons.io.IOUtils;
+import java.io.Reader;
 
 class DatabaseCFileInsert
 {
@@ -40,20 +42,42 @@ class DatabaseCFileInsert
             System.out.print("Enter Resume URL: ");
             String resume = sc.next();
             
-            InputStream is = new FileInputStream(image);
+            FileInputStream fis = new FileInputStream(image);
             FileReader fr = new FileReader(resume);
             
             ps.setInt(1,roll);
             ps.setString(2,name);
             ps.setInt(3,age);
             ps.setString(4,address);
-            ps.setBinaryStream(5,is);
+            ps.setBinaryStream(5,fis);
             ps.setCharacterStream(6,fr);
             
             int count = 0;
             count = ps.executeUpdate();
             System.out.println(count+" rows affected......");
-            
+            System.out.print("Enter Roll No. of Student to retrive Data Of student: ");
+            roll = sc.nextInt();
+            query = "select * from studinfo where roll = ?";
+            PreparedStatement ps1 = con.prepareStatement(query);
+            ps1.setInt(1,roll);
+            rs = ps1.executeQuery();
+            if(rs.next())
+            {
+                System.out.println("Retriving data.... 10%");
+                System.out.println("Retriving data.... 50%");
+                System.out.println("Retriving data.... 70%");
+                System.out.println("Retriving data.... 100%");
+                System.out.println("Retrived data Successfully...");
+                System.out.println(" | "+rs.getInt(1)+" | "+rs.getString(2)+" | "+rs.getInt(3)+" | "+rs.getString(4)+" | ");
+                
+                InputStream is = rs.getBinaryStream(5);
+                Reader is1 = rs.getCharacterStream(6);
+                FileOutputStream fos = new FileOutputStream("image.img");
+                FileOutputStream fos1 = new FileOutputStream("info.txt");
+                IOUtils.copy(is,fos);
+                IOUtils.copy(is1,fos1);
+                
+            }
         }
     }
 }

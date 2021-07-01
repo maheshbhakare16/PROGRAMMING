@@ -19,7 +19,7 @@ class DateExe
         }
         else
         {
-            String query = "insert into studinfo values (?,?,?,?)";
+            String query = "insert into studentinformation values (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = null;
             int count;
@@ -52,7 +52,7 @@ class DateExe
                 System.out.println("Error while inserting....");
             }
             
-            query = "select year(dob) as yob from studinfo where roll = ?";
+            query = "select * from studentinformation where roll = ?";
             PreparedStatement ps1 = con.prepareStatement(query);
             System.out.print("Enter Roll No.: ");
             roll = sc.nextInt();
@@ -60,11 +60,7 @@ class DateExe
             rs = ps1.executeQuery();
             if(rs.next()!=false)
             {
-                int yob = Integer.parseInt(rs.getString("yob"));
-                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
-                java.util.Date curdate = new java.util.Date();
-                int curyear = Integer.parseInt(sdf1.format(curdate));
-                System.out.println("Current Age = "+(curyear-yob));
+                System.out.println("Roll: "+rs.getInt(1)+" Name: "+rs.getString(2)+" DOB: "+rs.getDate(3)+" Address: "+rs.getString(4));
             }
             else
             {

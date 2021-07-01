@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.FileOutputStream;
+import org.apache.commons.io.IOUtils;
 class DatabaseImageInsert
 {
     public static void main(String args[]) throws Exception
@@ -31,12 +33,12 @@ class DatabaseImageInsert
             String address = sc.next();
             System.out.print("Enter Path of Image of Student: ");
             String path = sc.next();
-            InputStream is = new FileInputStream(path);
+            FileInputStream fis = new FileInputStream(path);
             ps.setInt(1,roll);
             ps.setString(2,name);
             ps.setInt(3,age);
             ps.setString(4,address);
-            ps.setBinaryStream(5,is);
+            ps.setBinaryStream(5,fis);
             int count = 0;
             count = ps.executeUpdate();
             System.out.println(count+" rows Affected...");
@@ -55,7 +57,9 @@ class DatabaseImageInsert
                 name = rs.getString(2);
                 age = rs.getInt(3);
                 address = rs.getString(4);
-                is = rs.getBinaryStream(5);
+                InputStream is = rs.getBinaryStream(5);
+                FileOutputStream fos = new FileOutputStream("output.img");
+                IOUtils.copy(is,fos);
                 System.out.println(" | "+roll+" | "+name+" | "+age+" | "+address+" | ");
              }
              else
