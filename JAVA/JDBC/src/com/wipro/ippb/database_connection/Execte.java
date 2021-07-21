@@ -51,18 +51,20 @@ class Execte
                 
             }
         }
-        catch(SQLSyntaxErrorException e)
+        
+        catch(NullPointerException  | ArithmeticException | SQLException e )
         {
             System.out.println(e.getMessage());
         }
-        catch(SQLException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+//         catch(SQLSyntaxErrorException e)
+//         {
+//             System.out.println(e.getMessage());
+//         }
+//         catch(SQLException e)
+//         {
+//             System.out.println(e.getMessage());
+//         }
+  /*      
         finally
         {
             try
@@ -85,6 +87,7 @@ class Execte
             {
                 System.out.println(e.getMessage());
             }
-        }
+        }*/
+        
 	}
 }
