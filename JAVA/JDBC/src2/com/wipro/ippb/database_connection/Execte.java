@@ -1,7 +1,5 @@
 package com.wipro.ippb.database_connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -16,12 +14,12 @@ class Execte
 
 
 //  ----------------------------------- CONNECTION ESTABLISH -------------------------------
-		Connection con = null;
-		try
+// 		Connection con = null;
+		try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");Scanner sc = new Scanner(System.in);Statement st = con.createStatement())
 		{
 		
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");
-            Scanner sc = new Scanner(System.in);
+            
+            
             if(con == null)
             {
                 System.out.println("Not Established");
@@ -30,16 +28,21 @@ class Execte
             else
             {
 
-                Statement st =null;
-                st = con.createStatement();
+                
                 String query = sc.nextLine();
                 boolean result = st.execute(query);
                 if (result == true)
                 {
-                    ResultSet rs = st.getResultSet();
+                    try(ResultSet rs = st.getResultSet())
+                    {
                     while(rs.next() != false)
                     {
                         System.out.println(" | "+rs.getInt(1)+" | "+rs.getString(2)+" | ");
+                    }
+                    }
+                    catch(Exception e)
+                    {
+                        e.printStackTrace();
                     }
                 }
                 else
@@ -51,40 +54,9 @@ class Execte
                 
             }
         }
-        catch(SQLSyntaxErrorException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch(SQLException e)
-        {
-            System.out.println(e.getMessage());
-        }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                con.close();
-            }
-            catch(SQLSyntaxErrorException e)
-            {
-                System.out.println(e.getMessage());
-            }
-            catch(SQLException e)
-            {
-                System.out.println(e.getMessage());
-            }
-            catch(NullPointerException ne)
-            {
-                System.out.println(ne);
-            }
-            catch(Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
         }
 	}
 }

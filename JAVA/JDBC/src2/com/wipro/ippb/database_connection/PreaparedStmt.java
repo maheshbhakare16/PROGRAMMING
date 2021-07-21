@@ -8,11 +8,13 @@ class PreparedStmt
 {
     public static void main(String args[])
     {
-        Scanner sc = new Scanner(System.in);
-        Connection con=null;
-        try
+        
+        String query = "select roll, name from studinfo where roll = ?";
+//         Connection con=null;
+        try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");Scanner sc = new Scanner(System.in);
+                PreparedStatement ps = con.prepareStatement(query))
         {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");
+            
         
             if(con == null)
             {
@@ -23,8 +25,6 @@ class PreparedStmt
                 ResultSet rs = null;
                 int roll;
                 roll = sc.nextInt();
-                String query = "select roll, name from studinfo where roll = ?";
-                PreparedStatement ps = con.prepareStatement(query);
                 ps.setInt(1,roll);
                 rs = ps.executeQuery();
                 if(rs.next() != false)
@@ -40,22 +40,7 @@ class PreparedStmt
         catch(Exception e)
         {
             System.out.println(e);
-        }
-        finally
-        {
-            try
-            {
-                con.close();
-            }
-            catch(NullPointerException ne)
-            {
-                System.out.println(ne);
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
+        }   
         
     }
 }

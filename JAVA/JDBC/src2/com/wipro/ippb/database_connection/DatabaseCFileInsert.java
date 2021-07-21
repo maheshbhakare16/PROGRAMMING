@@ -15,25 +15,26 @@ import java.io.Reader;
 
 class DatabaseCFileInsert
 {
-    public static void main(String args[])
+    public static void main(String args[]) throws Exception
     {
-        Connection con = null;
-        Scanner sc = null;
+        String query = "insert into studinfo values(?,?,?,?,?,?)";
+//         Connection con = null;
+//         Scanner sc = null;
         ResultSet rs = null;
-        try
+        try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");PreparedStatement ps = con.prepareStatement(query);Scanner sc = new Scanner(System.in))
         {
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");
+            
             if(con == null)
             {
                 System.out.println("Not Established....");
             }
             else
             {
-                String query = "insert into studinfo values(?,?,?,?,?,?)";
-                PreparedStatement ps = con.prepareStatement(query);
-                sc = new Scanner(System.in);
-                System.out.print("Enter Roll No.: ");
+                
+                
+                
+                System.out.print("Enter Roll No.: ");   
                 int roll = sc.nextInt();
                 System.out.print("Enter Name: ");
                 String name = sc.next();
@@ -46,8 +47,9 @@ class DatabaseCFileInsert
                 System.out.print("Enter Resume URL: ");
                 String resume = sc.next();
                 
-                FileInputStream fis = new FileInputStream(image);
-                FileReader fr = new FileReader(resume);
+                try(FileInputStream fis = new FileInputStream(image);FileReader fr = new FileReader(resume))
+                {
+                
                 
                 ps.setInt(1,roll);
                 ps.setString(2,name);
@@ -62,7 +64,10 @@ class DatabaseCFileInsert
                 System.out.print("Enter Roll No. of Student to retrive Data Of student: ");
                 roll = sc.nextInt();
                 query = "select * from studinfo where roll = ?";
-                PreparedStatement ps1 = con.prepareStatement(query);
+                try(PreparedStatement ps1 = con.prepareStatement(query))
+                {
+                    
+                
                 ps1.setInt(1,roll);
                 rs = ps1.executeQuery();
                 if(rs.next())
@@ -83,29 +88,23 @@ class DatabaseCFileInsert
                     
                 }
             }
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                con.close();
-            }
-            catch(NullPointerException ne)
-            {
-                ne.printStackTrace();
-            }
             catch(SQLException e)
             {
                 e.printStackTrace();
+            }
             }
             catch(Exception e)
             {
                 e.printStackTrace();
             }
         }
+            
+            
     }
+    catch(Exception e)
+    {
+        System.out.println(e.getMessage());
+    }
+    
+}
 }

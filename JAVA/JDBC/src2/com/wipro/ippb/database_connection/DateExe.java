@@ -1,6 +1,5 @@
 package com.wipro.ippb.database_connection;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.Scanner;
@@ -10,11 +9,11 @@ class DateExe
 {
     public static void main(String args[])
     {
-        Scanner sc = new Scanner(System.in);
-        Connection con=null;
-        try
+        String query = "insert into studentinformation values (?,?,?,?)";
+//         Connection con=null;
+        try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");Scanner sc = new Scanner(System.in);PreparedStatement ps = con.prepareStatement(query))
         {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");
+            
         
             if(con == null)
             {
@@ -22,8 +21,7 @@ class DateExe
             }
             else
             {
-                String query = "insert into studentinformation values (?,?,?,?)";
-                PreparedStatement ps = con.prepareStatement(query);
+                
                 ResultSet rs = null;
                 int count;
                 String name,dob,address;
@@ -74,25 +72,6 @@ class DateExe
         catch(Exception e)
         {
             System.out.println(e.getLocalizedMessage() );
-        }
-        finally
-        {
-            try
-            {
-                con.close();
-            }
-            catch(NullPointerException ne)
-            {
-                ne.printStackTrace();
-            }
-            catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
         }
         
     }

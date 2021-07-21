@@ -1,6 +1,5 @@
 package com.wipro.ippb.database_connection;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,22 +10,22 @@ import java.io.FileOutputStream;
 import org.apache.commons.io.IOUtils;
 class DatabaseImageInsert
 {
-    public static void main(String args[])
+    public static void main(String args[]) throws Exception
     {
-        Connection con = null;
-        Scanner sc = new Scanner(System.in);
-        try
+//         Connection con = null;
+         String query = "insert into studinfo values (?,?,?,?,?)";
+        try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");Scanner sc = new Scanner(System.in);PreparedStatement ps = con.prepareStatement(query))
         {
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","mahesh12@");
+            
             if(con == null)
             {
                 System.out.println("Not Established...");
             }
             else
             {
-                String query = "insert into studinfo values (?,?,?,?,?)";
-                PreparedStatement ps = con.prepareStatement(query);
+               
+                
                 System.out.print("Enter Roll No. of Student: ");
                 int roll = sc.nextInt();
                 System.out.print("Enter Name of Student: ");
@@ -37,7 +36,8 @@ class DatabaseImageInsert
                 String address = sc.next();
                 System.out.print("Enter Path of Image of Student: ");
                 String path = sc.next();
-                FileInputStream fis = new FileInputStream(path);
+                try(FileInputStream fis = new FileInputStream(path))
+                {
                 ps.setInt(1,roll);
                 ps.setString(2,name);
                 ps.setInt(3,age);
@@ -70,30 +70,16 @@ class DatabaseImageInsert
                 {
                     System.out.println("No data Found.....");
                 }
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
         catch(Exception e)
         {
             System.out.println(e);
-        }
-        finally
-        {
-            try
-            {
-                con.close();
-            }
-            catch(NullPointerException ne)
-            {
-                ne.printStackTrace();
-            }
-            catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
         }
     }
 }

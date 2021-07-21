@@ -15,11 +15,11 @@ class Demo
 
 
 //  ----------------------------------- CONNECTION ESTABLISH -------------------------------
-		Connection con = null;
-		try
+// 		Connection con = null;
+		try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","mahesh12@");Scanner sc = new Scanner(System.in);Statement st = con.createStatement();)
 		{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","mahesh12@");
-            Scanner sc = new Scanner(System.in);
+            
+            
             if(con == null)
             {
                 throw new SQLException();
@@ -33,7 +33,7 @@ class Demo
 			int count;
 // 			String dbname = sc.next();
             String dbname;
-			Statement st = con.createStatement();
+			
 			String query= "create database student";
 			count = st.executeUpdate(query);
 			if(count == 0)
@@ -191,16 +191,6 @@ class Demo
     {
         System.out.println(e.getMessage());
     }
-    finally
-    {
-        try
-        {
-            con.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-    }
+    
 	}
 }
